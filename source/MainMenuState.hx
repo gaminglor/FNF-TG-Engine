@@ -44,6 +44,9 @@ class MainMenuState extends MusicBeatState
 	
 	var magenta:FlxSprite;
 	var velocityBG:FlxBackdrop;
+	var checker:FlxBackdrop; 
+	var checker2:FlxBackdrop;
+	var logoBl:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
@@ -128,16 +131,38 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
+			menuItem.x -= 300;
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
-			menuItem.scrollFactor.set(0, scr);
+			menuItem.scrollFactor.set(0, 0.35);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
-
+		
+		logoBl = new FlxSprite(500, 300);
+		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoB.scale.x = 0.75;
+		logoB.scale.y = 0.75;
+		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
+		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logoBl.animation.play('bump');
+		logoBl.screenCenter(Y);
+		logoBl.updateHitbox();
+		
 		FlxG.camera.follow(camFollowPos, null, 1);
+		
+		checker = new FlxBackdrop(Paths.image('bar_top'), Y, 10, -3, 1000);
+		checker.y = -200;
+		checker.scrollFactor.set();
+		add(checker);
+
+		checker2 = new FlxBackdrop(Paths.image('bar_bot'), Y, 10, -3, 1000);
+		checker2.y = 600;
+		checker2.flipY = true;
+		checker2.scrollFactor.set();
+		add(checker2);
 		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "TG Engine v" + tgEngineVersion, 12);
 		versionShit.scrollFactor.set();
@@ -189,6 +214,9 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		checker.x += .5*(elapsed/(1/120));
+		checker2.x -= .5*(elapsed/(1/120));
+		
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
