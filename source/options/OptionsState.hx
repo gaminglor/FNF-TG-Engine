@@ -22,6 +22,7 @@ import haxe.Json;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import flixel.addons.display.FlxBackdrop;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
@@ -30,10 +31,12 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', #if android 'Android Controls', #end 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
+	var language:String = ClientPrefs.language;
+	var velocityBG:FlxBackdrop;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
@@ -42,6 +45,11 @@ class OptionsState extends MusicBeatState
 				removeVirtualPad();
 				#end
 				openSubState(new options.NotesSubState());
+			case 'Android Controls':
+				#if android
+				removeVirtualPad();
+				#end
+				openSubState(new options.AndroidControlSettings());
 			case 'Controls':
 				#if android
 				removeVirtualPad();
@@ -85,6 +93,10 @@ class OptionsState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		
+		velocityBG = new FlxBackdrop(Paths.image('velocity_background'));
+		velocityBG.velocity.set(50, 50);
+		add(velocityBG);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -106,23 +118,26 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if android
-		var tipText:FlxText = new FlxText(10, 12, 0, 'Press X to Go In Android Controls Menu', 16);
+		if (ClientPrefs.language == 'Chinese') {
+		var tipText:FlxText = new FlxText(10, 12, 0, '按下E打开按键修改界面', 16);
+		tipText.setFormat(Paths.font("syht.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 2;
+		tipText.scrollFactor.set();
+		add(tipText);
+		} else {
+		var tipText:FlxText = new FlxText(10, 12, 0, 'Press E to Go In Android Controls Menu', 16);
 		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
 		add(tipText);
-		var tipText:FlxText = new FlxText(10, 32, 0, 'Press Y to Go In Hitbox Settings Menu', 16);
-		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		tipText.borderSize = 2;
-		tipText.scrollFactor.set();
-		add(tipText);
+		}
 		#end
 
 		changeSelection();
 		ClientPrefs.saveSettings();
 
 		#if android
-		addVirtualPad(UP_DOWN, A_B_X_Y);
+		addVirtualPad(UP_DOWN, A_B_E);
 		#end
 
 		super.create();
@@ -144,19 +159,20 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
-			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			if (PauseSubState.optionMenu) {
+				MusicBeatState.switchState(new PlayState());
+				PauseSubState.optionMenu = false;
+			} else {
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				MusicBeatState.switchState(new MainMenuState());
+			}
 		}
 
 		#if android
-		if (_virtualpad.buttonX.justPressed) {
+		if (_virtualpad.buttonE.justPressed) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new android.AndroidControlsMenu());
-		}
-		if (_virtualpad.buttonY.justPressed) {
-			removeVirtualPad();
-			openSubState(new android.HitboxSettingsSubState());
 		}
 		#end
 

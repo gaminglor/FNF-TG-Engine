@@ -29,11 +29,111 @@ using StringTools;
 
 class VisualsUISubState extends BaseOptionsMenu
 {
+	var language:String = ClientPrefs.language;
+	
 	public function new()
 	{
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
+		
+		if (ClientPrefs.language == 'Chinese') {
+		var option:Option = new Option('Note Splashes',
+			'当获得“sick”判定时的打击特效',
+			'noteSplashes',
+			'bool',
+			true);
+		addOption(option);
 
+		var option:Option = new Option('Hide HUD',
+			'隐藏HUD',
+			'hideHud',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Language',
+			'语言 只有中/英 有的文字没有改(悲',
+			'language',
+			'string',
+			'English',
+			['English', 'Chinese']);
+		addOption(option);
+
+		var option:Option = new Option('Time Bar:',
+			'时间条应该显示什么!?!?',
+			'timeBarType',
+			'string',
+			'Time Left',
+			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+		addOption(option);
+
+		var option:Option = new Option('Flashing Lights',
+			'如果你对闪光敏感请关闭',
+			'flashing',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Camera Zooms',
+			'关闭后镜头不会随节拍缩放',
+			'camZooms',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Score Text Zoom on Hit',
+			'点击按键时Score Text缩放',
+			'scoreZoom',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Health Bar Transparency',
+			'生命条不透明度',
+			'healthBarAlpha',
+			'percent',
+			1);
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
+		
+		var option:Option = new Option('FPS Counter',
+			'FPS 计数器',
+			'showFPS',
+			'bool',
+			true);
+		addOption(option);
+		option.onChange = onChangeFPSCounter;
+
+		var option:Option = new Option('Pause Screen Song:',
+			'暂停界面应该放什么歌?',
+			'pauseMusic',
+			'string',
+			'Tea Time',
+			['None', 'Breakfast', 'Tea Time']);
+		addOption(option);
+		option.onChange = onChangePauseMusic;
+		
+		#if CHECK_FOR_UPDATES
+		var option:Option = new Option('Check for Updates',
+			'该更新啦!',
+			'checkForUpdates',
+			'bool',
+			true);
+		addOption(option);
+		#end
+
+		var option:Option = new Option('Combo Stacking',
+			'如果关闭, 连击/数贴图将不会重置 并会保存到系统缓存中',
+			'comboStacking',
+			'bool',
+			true);
+		addOption(option);
+		}
+		else {
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting \"Sick!\" notes won't show particles.",
 			'noteSplashes',
@@ -47,7 +147,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-		
+
+		var option:Option = new Option('Language',
+			"We have only Chinese and English LOL\nAnd only change some text",
+			'language',
+			'string',
+			'English',
+			['English', 'Chinese']);
+		addOption(option);
+
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
 			'timeBarType',
@@ -121,6 +229,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		}
 
 		super();
 	}

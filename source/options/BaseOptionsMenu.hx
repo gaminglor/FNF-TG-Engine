@@ -21,6 +21,7 @@ import flixel.util.FlxSave;
 import haxe.Json;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.addons.display.FlxBackdrop;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
@@ -44,6 +45,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 	public var title:String;
 	public var rpcTitle:String;
+	
+	var velocityBG:FlxBackdrop;
 
 	public function new()
 	{
@@ -61,6 +64,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		
+		velocityBG = new FlxBackdrop(Paths.image('velocity_background'));
+		velocityBG.velocity.set(50, 50);
+		add(velocityBG);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -83,7 +90,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		add(titleText);
 
 		descText = new FlxText(50, 600, 1180, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.language == 'Chinese') {descText.setFormat(Paths.font("syht.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);}
+		else {descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);}
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
@@ -95,7 +103,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			/*optionText.forceX = 300;
 			optionText.yMult = 90;*/
 			optionText.targetY = i;
+			optionText.screenCenter(X);
+			optionText.changeX = false;
 			grpOptions.add(optionText);
+			
 
 			if(optionsArray[i].type == 'bool') {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
