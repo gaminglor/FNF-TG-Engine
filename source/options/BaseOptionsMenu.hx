@@ -103,8 +103,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			/*optionText.forceX = 300;
 			optionText.yMult = 90;*/
 			optionText.targetY = i;
-			optionText.screenCenter(X);
-			optionText.changeX = false;
 			grpOptions.add(optionText);
 			
 
