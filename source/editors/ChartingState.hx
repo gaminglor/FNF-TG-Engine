@@ -3093,7 +3093,7 @@ class ChartingState extends MusicBeatState
 			if (CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase() != 'normal') {
 				SUtil.saveContent(Paths.formatToSongPath(_song.song) + postfix + '-' + CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase(), ".json", data.trim(), 'chart');
 			} else {
-				SUtil.saveContent(Paths.formatToSongPath(_song.song) + postfix, + ".json", data.trim(), 'chart');
+				SUtil.saveContent(Paths.formatToSongPath(_song.song) + postfix, ".json", data.trim(), 'chart');
 			}
 			#else
 			_file = new FileReference();
