@@ -143,8 +143,8 @@ class MainMenuState extends MusicBeatState
 		
 		logoBl = new FlxSprite(500, 300);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		logoB.scale.x = 0.75;
-		logoB.scale.y = 0.75;
+		logoBl.scale.x = 0.75;
+		logoBl.scale.y = 0.75;
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
