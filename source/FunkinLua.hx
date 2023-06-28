@@ -215,6 +215,11 @@ class FunkinLua {
 		set('shadersEnabled', ClientPrefs.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
+		
+		// TG Engine
+		set('language', ClientPrefs.language);
+		set('rainbowFPS', ClientPrefs.rainbowFPS);
+		set('tgVersion', MainMenuState.tgEngineVersion.trim());
 
 		#if windows
 		set('buildTarget', 'windows');
@@ -229,7 +234,39 @@ class FunkinLua {
 		#else
 		set('buildTarget', 'unknown');
 		#end
+		
+		
+		// read json
+		Lua_helper.add_callback(lua, "parseJsonData", function(filePath:String, varName:String) {
+			var json = Paths.modFolders(filePath + '.json');
+			var foundJson:Bool;
 
+			trace(Assets.exists(json));
+
+			#if sys
+				if (FileSystem.exists(json)) {
+					foundJson = true;
+				} else {
+					luaTrace('parseJsonData: Invalid json file path!', false, false, FlxColor.RED);
+					foundJson = false;
+					return;	
+				}
+			#else
+				if (Assets.exists(json)) {
+					foundJson = true;
+				} else {
+					luaTrace('parseJsonData: Invalid json file path!', false, false, FlxColor.RED);
+					foundJson = false;
+					return;	
+				}
+			#end
+
+			if (foundJson) {
+				var parsedJson = haxe.Json.parse(File.getContent(json));				
+				PlayState.instance.variables.set(varName, parsedJson);
+			}
+		});
+		
 		// custom substate
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, pauseGame:Bool = false) {
 			if(pauseGame)
@@ -2294,7 +2331,7 @@ class FunkinLua {
 			if (text3 == null) text3 = '';
 			if (text4 == null) text4 = '';
 			if (text5 == null) text5 = '';
-			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
+			luaTrace('' + text1 + ', ' + text2 + ', ' + text3 + ', ' + text4 + ', ' + text5, true, false);
 		});
 		
 		Lua_helper.add_callback(lua, "close", function() {
@@ -2872,26 +2909,23 @@ class FunkinLua {
 	}
 	#end
 	
-	function initLuaShader(name:String)
+	public function initLuaShader(name:String)
 	{
 		if(!ClientPrefs.shaders) return false;
 
-		#if (!flash && sys)
 		if(PlayState.instance.runtimeShaders.exists(name))
 		{
-			luaTrace('Shader $name was already initialized!');
+			FlxG.log.warn('Shader $name was already initialized!');
 			return true;
 		}
 
-		var foldersToCheck:Array<String> = [SUtil.getPath() + Paths.getPreloadPath('shaders/')];
-
+		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-
 			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
 
 		for(mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-		
+
 		for (folder in foldersToCheck)
 		{
 			if(FileSystem.exists(folder))
@@ -2906,7 +2940,7 @@ class FunkinLua {
 				}
 				else frag = null;
 
-				if(FileSystem.exists(vert))
+				if (FileSystem.exists(vert))
 				{
 					vert = File.getContent(vert);
 					found = true;
@@ -2916,15 +2950,12 @@ class FunkinLua {
 				if(found)
 				{
 					PlayState.instance.runtimeShaders.set(name, [frag, vert]);
-					//trace('Found shader $name!');
+					//trace('Finally Found shader $name!');
 					return true;
 				}
 			}
 		}
-		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
-		#else
-		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
-		#end
+		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
 		return false;
 	}
 

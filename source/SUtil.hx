@@ -35,7 +35,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
+			return aDir = Tools.getExternalStorageDirectory() + '/.TG Engine Files/';
 		#else
 		return '';
 		#end
@@ -47,34 +47,32 @@ class SUtil
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
 			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+			SUtil.applicationAlert('Permissions', "Press OK to see what happens" + '\n' + 'If files are already game will continue \n or you should install mods and assets in .TG Engine Files');
 		}
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
-				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
+			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + 'TG Engine Files'))
+				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + 'TG Engine Files');
+				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + 'TG Engine Files/mods');
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
-				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-				System.exit(0);
+				SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease copy them from .apk");
+				// System.exit(0);
 			}
 			else
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-					System.exit(0);
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease copy them from .apk");
+					// System.exit(0);
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-					System.exit(0);
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease copy them from .apk");
+					// System.exit(0);
 				}
 			}
 		}
@@ -128,12 +126,20 @@ class SUtil
 	}
 
 	#if android
-	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code', fileType:String = 'unknown')
 	{
 		if (!FileSystem.exists(SUtil.getPath() + 'saves'))
 			FileSystem.createDirectory(SUtil.getPath() + 'saves');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/characters');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/dialogueCharacter');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/dialogue');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/menuCharacter');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/chart');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/week');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/credits');
+			FileSystem.createDirectory(SUtil.getPath() + 'saves/unknown');
 
-		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+		File.saveContent(SUtil.getPath() + 'saves/' + fileType + '/' + fileName + fileExtension, fileData);
 		SUtil.applicationAlert('Done :)!', 'File Saved Successfully!');
 	}
 

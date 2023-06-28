@@ -135,6 +135,9 @@ class FreeplayState extends MusicBeatState
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			// songText.screenCenter(X);
+			
+			songText.screenCenter(X);
+			songText.changeX = false;
 		}
 		WeekData.setDirectoryFromWeek();
 
@@ -203,6 +206,7 @@ class FreeplayState extends MusicBeatState
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
+		text.screenCenter(X);
 
                 #if android
                 addVirtualPad(FULL, A_B_C_X_Y_Z);

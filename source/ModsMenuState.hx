@@ -79,15 +79,26 @@ class ModsMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
-
-		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
-		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
-		noModsTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		noModsTxt.scrollFactor.set();
-		noModsTxt.borderSize = 2;
-		add(noModsTxt);
-		noModsTxt.screenCenter();
-		visibleWhenNoMods.push(noModsTxt);
+	
+		if (ClientPrefs.language == 'Chinese') {
+			noModsTxt = new FlxText(0, 0, FlxG.width, "未装载模组\n按BACK(安卓B)退出并安装MOD", 48);
+			if(FlxG.random.bool(10)) noModsTxt.text += '\n不会装别玩.'; //meanie
+			noModsTxt.setFormat(Paths.font("syht.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			noModsTxt.scrollFactor.set();
+			noModsTxt.borderSize = 2;
+			add(noModsTxt);
+			noModsTxt.screenCenter();
+			visibleWhenNoMods.push(noModsTxt);
+		} else {
+			noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK(B for android) TO EXIT AND INSTALL A MOD", 48);
+			if(FlxG.random.bool(10)) noModsTxt.text += '\nBITCH. THAT IS SO EASY BUT YOU CANT LOL'; //meanie
+			noModsTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			noModsTxt.scrollFactor.set();
+			noModsTxt.borderSize = 2;
+			add(noModsTxt);
+			noModsTxt.screenCenter();
+			visibleWhenNoMods.push(noModsTxt);
+		}
 
 		var path:String = SUtil.getPath() + 'modsList.txt';
 		if(FileSystem.exists(path))
@@ -502,6 +513,9 @@ class ModsMenuState extends MusicBeatState
 				MusicBeatState.switchState(new MainMenuState());
 			}
 		}
+		
+		if (FlxG.keys.pressed.R #if android || _virtualpad.buttonA.pressed #end)
+			MusicBeatState.switchState(new ModsMenuState());
 
 		if(controls.UI_UP_P)
 		{

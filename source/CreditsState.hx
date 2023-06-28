@@ -12,6 +12,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
+import flixel.addons.display.FlxBackdrop;
 import flixel.tweens.FlxEase;
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -34,6 +35,7 @@ class CreditsState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var descBox:AttachedSprite;
+	var velocityBG:FlxBackdrop;
 
 	var offsetThing:Float = -75;
 
@@ -48,6 +50,10 @@ class CreditsState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
 		bg.screenCenter();
+		
+		velocityBG = new FlxBackdrop(Paths.image('velocity_background'));
+		velocityBG.velocity.set(50, 50);
+		add(velocityBG);
 		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -81,6 +87,11 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['TG Engine Team'],
+			['TieGuo',		'TieGuo',		'Programmer',							'https://b23.tv/OiK1Ssh',	'5DE7FF'],
+			['beihu',		'beihu',		'Programmer',							'https://b23.tv/0tuSLr2',	'5DE7FF'],
+			['CaptainBaldi',		'CaptainBaldi',		'Read json lua functions',							'https://github.com/CaptainBaldi',	'FFFFFF'],
+			['Haone',		'Haone',		'Credits Editor',							'https://github.com/haoneRG',	'FFFFFF'],
 			['Psych Engine Android Team'],
 			['MaysLastPlay',		'MaysLastPlay',		'Android Porter',							'https://www.youtube.com/channel/UCx0LxtFR8ROd9sFAq-UxDfw',	'5DE7FF'],
 			['Nuno Filipe Studios',	'nuno',				'Android Porter',							'https://www.youtube.com/channel/UCq7G3p4msVN5SX2CpJ86tTw',	'989c99'],
@@ -154,7 +165,7 @@ class CreditsState extends MusicBeatState
 		add(descBox);
 
 		descText = new FlxText(50, FlxG.height + offsetThing - 25, 1180, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+		descText.setFormat(Paths.font("syht.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 		descText.scrollFactor.set();
 		//descText.borderSize = 2.4;
 		descBox.sprTracker = descText;
