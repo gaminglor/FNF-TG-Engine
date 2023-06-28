@@ -2322,10 +2322,23 @@ class PlayState extends MusicBeatState
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName + '\n'
 		+ (ratingName != '?' ? 'Accuracy: (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) | $ratingFC' : '');
-
-		if(ClientPrefs.scoreZoom){
-			if(cpuControlled)
-				scoreTxt.text = 'Score: ' + songScore + ' | Botplay'
+		
+		if(cpuControlled) {
+		scoreTxt.text = 'Score: ' + songScore + ' | Botplay';
+		}
+		
+		if(ClientPrefs.scoreZoom && !miss)
+		{
+			if(scoreTxtTween != null) {
+				scoreTxtTween.cancel();
+			}
+			scoreTxt.scale.x = 1.075;
+			scoreTxt.scale.y = 1.075;
+			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					scoreTxtTween = null;
+				}
+			});
 		}
 		
 		callOnLuas('onUpdateScore', [miss]);
