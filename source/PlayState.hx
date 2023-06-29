@@ -1013,6 +1013,15 @@ class PlayState extends MusicBeatState
 		doof.skipDialogueThing = skipDialogue;
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
+		
+		if (ClientPrefs.middleScroll) {
+			notebarbg = new FlxSprite(398, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
+		} else {
+			notebarbg = new FlxSprite(715, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
+		}
+		notebarbg.alpha = backbaropacity;
+		notebarbg.scrollFactor.set();
+		add(notebarbg);
 
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
@@ -1188,15 +1197,6 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
-		
-		if (ClientPrefs.middleScroll) {
-			notebarbg = new FlxSprite(398, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
-		} else {
-			notebarbg = new FlxSprite(715, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
-		}
-		notebarbg.alpha = backbaropacity;
-		notebarbg.scrollFactor.set();
-		add(notebarbg);
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
