@@ -208,6 +208,7 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
+	public var backbaropacity:Float = 0;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -389,6 +390,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		backbaropacity = ClientPrefs.getGameplaySetting('backbaropacity', 0);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1185,9 +1187,19 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
+		
+		if (ClientPrefs.middleScroll) {
+			notebarbg = new FlxSprite(398, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
+		} else {
+			notebarbg = new FlxSprite(715, 0).makeGraphic(475, FlxG.height, FlxColor.BLACK);
+		}
+		notebarbg.alpha = backbaropacity;
+		notebarbg.scrollFactor.set();
+		add(notebarbg);
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
+		notebarbg.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
@@ -2321,10 +2333,10 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + songScore
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName + '\n'
-		+ (ratingName != '?' ? 'Accuracy: (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) | $ratingFC' : '');
+		+ (ratingName != '?' ? 'Accuracy: ${Highscore.floorDecimal(ratingPercent * 100, 2)}% - $ratingFC' : '');
 		
 		if(cpuControlled) {
-		scoreTxt.text = 'Score: ' + songScore + ' | Botplay';
+			scoreTxt.text = 'Score: ' + songScore + ' | Botplay';
 		}
 		
 		if(ClientPrefs.scoreZoom && !miss)

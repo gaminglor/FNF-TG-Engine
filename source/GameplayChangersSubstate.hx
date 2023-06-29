@@ -70,6 +70,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.decimals = 2;
 		optionsArray.push(option);
 		#end
+		
+		var option:GameplayOption = new GameplayOption('Note Back Bar Opacity', 'backbaropacity', 'float', 0);
+		option.scrollSpeed = 1;
+		option.minValue = 0;
+		option.maxValue = 1;
+		option.changeValue = 0.05;
+		option.displayFormat = '%vX';
+		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'healthgain', 'float', 1);
 		option.scrollSpeed = 2.5;

@@ -114,7 +114,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var scale:Float = 1;
+		var scale:Float = 0.9;
 		/*if(optionShit.length > 6) {
 			scale = 6 / optionShit.length;
 		}*/
@@ -154,12 +154,12 @@ class MainMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollowPos, null, 1);
 		
 		checker = new FlxBackdrop(Paths.image('bar_top'), Y, 10, -3, 1000);
-		checker.y = -200;
+		checker.y = -270;
 		checker.scrollFactor.set();
 		add(checker);
 
 		checker2 = new FlxBackdrop(Paths.image('bar_bot'), Y, 10, -3, 1000);
-		checker2.y = 600;
+		checker2.y = 670;
 		checker2.flipY = true;
 		checker2.scrollFactor.set();
 		add(checker2);

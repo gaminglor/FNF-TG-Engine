@@ -191,6 +191,19 @@ class FreeplayState extends MusicBeatState
 		add(textBG);
 
 		#if PRELOAD_ALL
+		if (ClientPrefs.language == 'Chinese') {
+		#if android
+		var leText:String = "按下 X 来听歌 / 按下 C 来打开Gameplay Changer / 按下 Y 重置分数和精准度.";
+		var size:Int = 16;
+		#else
+		var leText:String = "按下 空格 来听歌 / 按下 Ctrl 来打开Gameplay Changer / 按下 重置 重置分数和精准度.";
+		var size:Int = 16;
+		#end
+		#else
+		var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+		var size:Int = 18;
+		#end
+		} else {
 		#if android
 		var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
 		var size:Int = 16;
@@ -202,11 +215,12 @@ class FreeplayState extends MusicBeatState
 		var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
 		var size:Int = 18;
 		#end
+		}
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
-		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
+		text.setFormat(Paths.font("syht.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
-		add(text);
 		text.screenCenter(X);
+		add(text);
 
                 #if android
                 addVirtualPad(FULL, A_B_C_X_Y_Z);
