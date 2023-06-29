@@ -212,7 +212,7 @@ class FreeplayState extends MusicBeatState
 				leText = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
 			#end
 		}
-		
+		var size:Int = 16;
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat(Paths.font("syht.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
