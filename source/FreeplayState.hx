@@ -189,33 +189,30 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
-
-		#if PRELOAD_ALL
+		
+		var leText:String = '';
 		if (ClientPrefs.language == 'Chinese') {
-		#if android
-		var leText:String = "按下 X 来听歌 / 按下 C 来打开Gameplay Changer / 按下 Y 重置分数和精准度.";
-		var size:Int = 16;
-		#else
-		var leText:String = "按下 空格 来听歌 / 按下 Ctrl 来打开Gameplay Changer / 按下 重置 重置分数和精准度.";
-		var size:Int = 16;
-		#end
-		#else
-		var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
-		var size:Int = 18;
-		#end
+			#if PRELOAD_ALL
+				#if android
+					leText = "按下 X 来听歌 / 按下 C 来打开Gameplay Changer / 按下 Y 重置分数和精准度.";
+				#else
+					leText = "按下 空格 来听歌 / 按下 Ctrl 来打开Gameplay Changer / 按下 重置 重置分数和精准度.";
+				#end
+			#else
+				leText = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+			#end
 		} else {
-		#if android
-		var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
-		var size:Int = 16;
-		#else
-		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
-		var size:Int = 16;
-		#end
-		#else
-		var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
-		var size:Int = 18;
-		#end
+			#if PRELOAD_ALL
+				#if android
+					leText = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+				#else
+					leText = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+				#end
+			#else
+				leText = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+			#end
 		}
+		
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat(Paths.font("syht.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
