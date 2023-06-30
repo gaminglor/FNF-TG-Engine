@@ -16,7 +16,7 @@ class FlashingState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 	
-	var languageList:Array<String> = ['English', 'Chinese'];
+	var languageList:Array<String> = ['English', 'Chinese']; //put English at first if you want add a new language
 	var languageChoose:Int = 0;
 
 	var warnText:FlxText;
@@ -78,26 +78,9 @@ class FlashingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (controls.UI_LEFT_P)
-			languageChoose += 1;
+			changeLanguage(1);
 		if (controls.UI_RIGHT_P)
-			languageChoose += -1;
-			
-		if (languageChoose < 0)
-			languageChoose = languageList.length - 1;
-		if (languageChoose >= languageList.length)
-			languageChoose = 0;
-			
-		if(ClientPrefs.language == 'Chinese') {
-			warnText.text = "嘿，看这里\n当然，这里有闪光特效\n点击A来关闭闪光特效.\n按下B忽略此信息.\n我已经警告过你了!";
-		} else {
-			warnText.text = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress A to disable them now or go to Options Menu.\nPress B to ignore this message.\nYou've been warned!";
-		}
-		
-		warnText.text += "按下左/右键来切换语言\nPress Left/Right to change language";
-			
-		ClientPrefs.language = languageList[languageChoose];
-		ClientPrefs.saveSettings();
-		languageText.text = 'Language: ' + ClientPrefs.language;
+			changeLanguage(-1);
 			
 		if(!leftState) {
 			var back:Bool = controls.BACK;
@@ -125,5 +108,27 @@ class FlashingState extends MusicBeatState
 			}
 		}
 		super.update(elapsed);
+	}
+	
+	function changeLanguage(huh:Int = 0)
+	{
+		languageChoose += huh;
+		
+		if (languageChoose < 0)
+			languageChoose = languageList.length - 1;
+		if (languageChoose >= languageList.length)
+			languageChoose = 0;
+			
+		ClientPrefs.language = languageList[languageChoose];
+		ClientPrefs.saveSettings();
+		languageText.text = 'Language: ' + ClientPrefs.language;
+			
+		if(ClientPrefs.language == 'Chinese') {
+			warnText.text = "嘿，看这里\n当然，这里有闪光特效\n点击A来关闭闪光特效.\n按下B忽略此信息.\n我已经警告过你了!";
+		} else {
+			warnText.text = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress A to disable them now or go to Options Menu.\nPress B to ignore this message.\nYou've been warned!";
+		}
+		
+		warnText.text += "按下左/右键来切换语言\nPress Left/Right to change language";
 	}
 }

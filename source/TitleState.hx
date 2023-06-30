@@ -438,6 +438,9 @@ class TitleState extends MusicBeatState
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
+		
+		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * 1), 0, 1));
+
 
 		#if mobile
 		for (touch in FlxG.touches.list)
@@ -612,6 +615,8 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+		
+		FlxG.camera.zoom += 0.015 * 1;
 
 		if(logoBl != null)
 			logoBl.animation.play('bump', true);

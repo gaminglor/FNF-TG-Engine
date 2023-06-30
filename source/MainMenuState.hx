@@ -114,7 +114,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var scale:Float = 0.97;
+		var scale:Float = 0.99;
 		/*if(optionShit.length > 6) {
 			scale = 6 / optionShit.length;
 		}*/
@@ -154,12 +154,12 @@ class MainMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollowPos, null, 1);
 		
 		checker = new FlxBackdrop(Paths.image('bar_top'), Y, 10, -3, 1000);
-		checker.y = -220;
+		checker.y = -205;
 		checker.scrollFactor.set();
 		add(checker);
 
 		checker2 = new FlxBackdrop(Paths.image('bar_bot'), Y, 10, -3, 1000);
-		checker2.y = 620;
+		checker2.y = 635;
 		checker2.flipY = true;
 		checker2.scrollFactor.set();
 		add(checker2);
@@ -211,11 +211,22 @@ class MainMenuState extends MusicBeatState
 	#end
 
 	var selectedSomethin:Bool = false;
+	
+	override function beatHit()
+	{
+		super.beatHit();
+		
+		FlxG.camera.zoom += 0.015 * 1;
+		camGame.zoom += 0.015 * 1;
+	}
 
 	override function update(elapsed:Float)
 	{
 		checker.x += .5*(elapsed/(1/120));
 		checker2.x -= .5*(elapsed/(1/120));
+		
+		camGame.zoom = FlxMath.lerp(1, camGame.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * 1), 0, 1));
+		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * 1), 0, 1));
 		
 		if (FlxG.sound.music.volume < 0.8)
 		{

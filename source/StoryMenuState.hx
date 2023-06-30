@@ -198,12 +198,21 @@ class StoryMenuState extends MusicBeatState
 		changeWeek();
 		super.closeSubState();
 	}
+	
+	override function beatHit()
+	{
+		super.beatHit();
+		
+		FlxG.camera.zoom += 0.015 * 1;
+	}
 
 	override function update(elapsed:Float)
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 30, 0, 1)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
+		
+		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * 1), 0, 1));
 		
 		if (ClientPrefs.language == 'Chinese') {
 			scoreText.text = "周分数:" + lerpScore;

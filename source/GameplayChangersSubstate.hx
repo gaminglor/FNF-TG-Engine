@@ -72,10 +72,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		#end
 		
 		var option:GameplayOption = new GameplayOption('Note Back Bar Opacity', 'backbaropacity', 'float', 0);
-		option.scrollSpeed = 1;
-		option.minValue = 0;
+		option.scrollSpeed = 2.5;
+		option.minValue = 0.0;
 		option.maxValue = 1;
-		option.changeValue = 0.05;
+		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
