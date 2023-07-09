@@ -9,6 +9,28 @@ import flixel.ui.FlxButton;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 
+typedef androidControlSetting =
+{
+	Hitbox:Array<HitboxArray>;
+	VirtualPad:Array<VirtualPadArray>;
+}
+
+typedef HitboxArray =
+{
+	alpha:Float;
+	type:String;
+	classBoxSkin:String;
+	spaceButton:Bool;
+	spaceType:String;
+	color:Array<Int>;
+}
+
+typedef VirtualPadArray =
+{
+	alpha:Float;
+	skin:String;
+}
+
 class FlxVirtualPad extends FlxSpriteGroup {
 	//Actions
 	public var buttonA:FlxButton;
@@ -41,6 +63,10 @@ class FlxVirtualPad extends FlxSpriteGroup {
 
 	public var orgAlpha:Float = 0.75;
 	public var orgAntialiasing:Bool = true;
+	
+	var androidControlJson:androidControlSetting;
+	
+	androidControlJson = Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 	
 	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode, ?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true) {
 		super();
@@ -184,7 +210,7 @@ class FlxVirtualPad extends FlxSpriteGroup {
 		button.solid = false;
 		button.immovable = true;
 		button.scrollFactor.set();
-		button.alpha = ClientPrefs.virtualPadAlpha;
+		button.alpha = androidControlJson.VirtualPad.alpha;
 		button.color = ColorS;
 		button.antialiasing = orgAntialiasing;
 		#if FLX_DEBUG
@@ -194,7 +220,7 @@ class FlxVirtualPad extends FlxSpriteGroup {
 	}
 
 	public static function getFrames():FlxAtlasFrames {
-		return Paths.getPackerAtlas('androidcontrols/' + Paths.getTextFromFile('images/androidcontrols/padskin.txt'));
+		return Paths.getPackerAtlas('androidcontrols/virtualpad/' + androidControlJson.VirtualPad.skin + '/pad');
 	}
 
 	override public function destroy():Void {

@@ -8,6 +8,28 @@ import flixel.tweens.FlxEase;
 import flixel.ui.FlxButton;
 import flixel.FlxSprite;
 
+typedef androidControlSetting =
+{
+	Hitbox:Array<HitboxArray>;
+	VirtualPad:Array<VirtualPadArray>;
+}
+
+typedef HitboxArray =
+{
+	alpha:Float;
+	type:String;
+	classBoxSkin:String;
+	spaceButton:Bool;
+	spaceType:String;
+	color:Array<Int>;
+}
+
+typedef VirtualPadArray =
+{
+	alpha:Float;
+	skin:String;
+}
+
 class FlxHitbox extends FlxSpriteGroup {
 	public var hitbox:FlxSpriteGroup;
 
@@ -18,6 +40,10 @@ class FlxHitbox extends FlxSpriteGroup {
 
 	public var orgAlpha:Float = 0.75;
 	public var orgAntialiasing:Bool = true;
+	
+	var androidControlJson:androidControlSetting;
+	
+	androidControlJson = Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 	
 	public function new(?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true) {
 		super();
@@ -36,7 +62,7 @@ class FlxHitbox extends FlxSpriteGroup {
 		hitbox.add(add(buttonUp = createhitbox(640, 0, "up")));
 		hitbox.add(add(buttonRight = createhitbox(960, 0, "right")));
 
-		var hitbox_hint:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('androidcontrols/' + Paths.getTextFromFile('images/androidcontrols/boxclassicskin.txt') + '_hint'));
+		var hitbox_hint:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('androidcontrols/hitbox' + androidControlJson.HitBox.classBoxSkin + '/hitbox_hint'));
 		hitbox_hint.antialiasing = orgAntialiasing;
 		hitbox_hint.alpha = orgAlpha;
 		add(hitbox_hint);
@@ -54,7 +80,7 @@ class FlxHitbox extends FlxSpriteGroup {
 	}
 
 	public function getFrames():FlxAtlasFrames {
-		return Paths.getSparrowAtlas('androidcontrols/' + Paths.getTextFromFile('images/androidcontrols/boxclassicskin.txt'));
+		return Paths.getSparrowAtlas('androidcontrols/hitbox/' + androidControlJson.HitBox.classBoxSkin + '/hitbox');
 	}
 
 	override public function destroy():Void {
