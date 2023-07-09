@@ -13,6 +13,7 @@ import android.flixel.FlxButton;
  *
  * @author Mihai Alexandru (M.A. Jigsaw)
  */
+using StringTools;
 typedef AndroidControlSetting =
 {
 	Hitbox:Array<HitboxArray>,

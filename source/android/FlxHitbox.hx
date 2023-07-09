@@ -9,6 +9,7 @@ import flixel.ui.FlxButton;
 import haxe.Json;
 import flixel.FlxSprite;
 
+using StringTools;
 typedef AndroidControlSetting =
 {
 	Hitbox:Array<HitboxArray>,

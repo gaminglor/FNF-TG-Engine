@@ -10,6 +10,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 import haxe.Json;
 
+using StringTools;
 typedef AndroidControlSetting =
 {
 	Hitbox:Array<HitboxArray>,
