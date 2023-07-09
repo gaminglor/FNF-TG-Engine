@@ -44,7 +44,7 @@ class FlxNewHitbox extends FlxSpriteGroup
 	
 	var androidControlJson:AndroidControlSetting;
 	
-	androidControlJson = Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
+	androidControlJson = haxe.Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 
 	/**
 	 * Create the zone.
