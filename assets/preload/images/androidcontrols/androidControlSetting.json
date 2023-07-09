@@ -1,0 +1,14 @@
+{
+	"HitBox": [
+		"alpha": 0.2,
+		"type": "New",
+		"classBoxSkin": "class",
+		"spaceButton": false,
+		"spaceType": "botton",
+		"color": [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000]
+	],
+	"VirtualPad": [
+		"alpha": 0.5,
+		"skin": "New"
+	]
+}
