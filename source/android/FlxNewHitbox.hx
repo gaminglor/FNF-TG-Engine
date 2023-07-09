@@ -14,24 +14,24 @@ import android.flixel.FlxButton;
  */
 typedef AndroidControlSetting =
 {
-	Hitbox:Array<HitboxArray>;
-	VirtualPad:Array<VirtualPadArray>;
+	Hitbox:Array<HitboxArray>,
+	VirtualPad:Array<VirtualPadArray>
 }
 
 typedef HitboxArray =
 {
-	alpha:Float;
-	type:String;
-	classBoxSkin:String;
-	spaceButton:Bool;
-	spaceType:String;
-	color:Array<Int>;
+	alpha:Float,
+	type:String,
+	classBoxSkin:String,
+	spaceButton:Bool|,
+	spaceType:String,
+	color:Array<Int>
 }
 
 typedef VirtualPadArray =
 {
-	alpha:Float;
-	skin:String;
+	alpha:Float,
+	skin:String
 }
 
 class FlxNewHitbox extends FlxSpriteGroup
