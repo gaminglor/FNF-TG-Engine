@@ -44,10 +44,6 @@ class FlxVirtualPad extends FlxSpriteGroup {
 	public var orgAlpha:Float = 0.75;
 	public var orgAntialiasing:Bool = true;
 	
-	var androidControlJson:AndroidControlSetting;
-	
-	androidControlJson = haxe.Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
-	
 	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode, ?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true) {
 		super();
 
