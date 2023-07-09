@@ -12,7 +12,7 @@ import android.flixel.FlxButton;
  *
  * @author Mihai Alexandru (M.A. Jigsaw)
  */
-typedef androidControlSetting =
+typedef AndroidControlSetting =
 {
 	Hitbox:Array<HitboxArray>;
 	VirtualPad:Array<VirtualPadArray>;
@@ -41,7 +41,7 @@ class FlxNewHitbox extends FlxSpriteGroup
 	public var buttonUp:FlxButton = new FlxButton(0, 0);
 	public var buttonRight:FlxButton = new FlxButton(0, 0);
 	
-	var androidControlJson:androidControlSetting;
+	var androidControlJson:AndroidControlSetting;
 	
 	androidControlJson = Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 

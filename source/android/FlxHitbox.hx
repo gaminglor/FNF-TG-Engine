@@ -8,7 +8,7 @@ import flixel.tweens.FlxEase;
 import flixel.ui.FlxButton;
 import flixel.FlxSprite;
 
-typedef androidControlSetting =
+typedef AndroidControlSetting =
 {
 	Hitbox:Array<HitboxArray>;
 	VirtualPad:Array<VirtualPadArray>;
@@ -41,7 +41,7 @@ class FlxHitbox extends FlxSpriteGroup {
 	public var orgAlpha:Float = 0.75;
 	public var orgAntialiasing:Bool = true;
 	
-	var androidControlJson:androidControlSetting;
+	var androidControlJson:AndroidControlSetting;
 	
 	androidControlJson = Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 	
