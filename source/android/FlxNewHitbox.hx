@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import openfl.display.BitmapData;
 import openfl.display.Shape;
-import haxe.Json;
 import android.flixel.FlxButton;
 
 /**
@@ -13,39 +12,12 @@ import android.flixel.FlxButton;
  *
  * @author Mihai Alexandru (M.A. Jigsaw)
  */
-using StringTools;
-typedef AndroidControlSetting =
-{
-	Hitbox:Array<HitboxArray>,
-	VirtualPad:Array<VirtualPadArray>
-}
-
-typedef HitboxArray =
-{
-	alpha:Float,
-	type:String,
-	classBoxSkin:String,
-	spaceButton:Bool|,
-	spaceType:String,
-	color:Array<Int>
-}
-
-typedef VirtualPadArray =
-{
-	alpha:Float,
-	skin:String
-}
-
 class FlxNewHitbox extends FlxSpriteGroup
 {
 	public var buttonLeft:FlxButton = new FlxButton(0, 0);
 	public var buttonDown:FlxButton = new FlxButton(0, 0);
 	public var buttonUp:FlxButton = new FlxButton(0, 0);
 	public var buttonRight:FlxButton = new FlxButton(0, 0);
-	
-	var androidControlJson:AndroidControlSetting;
-	
-	androidControlJson = haxe.Json.parse(Paths.getTextFromFile('images/androidcontrols/androidControlSetting.json'));
 
 	/**
 	 * Create the zone.
@@ -54,10 +26,10 @@ class FlxNewHitbox extends FlxSpriteGroup
 	{
 		super();
 
-		add(buttonLeft = createHint(0, 0, Std.int(FlxG.width / 4), FlxG.height, androidControlJson.HitBox.color[0]));
-		add(buttonDown = createHint(FlxG.width / 4, 0, Std.int(FlxG.width / 4), FlxG.height, androidControlJson.HitBox.color[1]));
-		add(buttonUp = createHint(FlxG.width / 2, 0, Std.int(FlxG.width / 4), FlxG.height, androidControlJson.HitBox.color[2]));
-		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, Std.int(FlxG.width / 4), FlxG.height, androidControlJson.HitBox.color[3]));
+		add(buttonLeft = createHint(0, 0, Std.int(FlxG.width / 4), FlxG.height, 0xFF00FF));
+		add(buttonDown = createHint(FlxG.width / 4, 0, Std.int(FlxG.width / 4), FlxG.height, 0x00FFFF));
+		add(buttonUp = createHint(FlxG.width / 2, 0, Std.int(FlxG.width / 4), FlxG.height, 0x00FF00));
+		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, Std.int(FlxG.width / 4), FlxG.height, 0xFF0000));
 
 		scrollFactor.set();
 	}
