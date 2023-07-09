@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import openfl.display.BitmapData;
 import openfl.display.Shape;
+import haxe.Json;
 import android.flixel.FlxButton;
 
 /**

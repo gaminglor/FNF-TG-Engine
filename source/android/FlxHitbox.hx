@@ -6,6 +6,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.ui.FlxButton;
+import haxe.Json;
 import flixel.FlxSprite;
 
 typedef AndroidControlSetting =
