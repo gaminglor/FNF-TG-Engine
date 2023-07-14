@@ -103,6 +103,7 @@ class CreditsEditor extends MusicBeatState
 		
 		#if android
 		addVirtualPad(UP_DOWN, A_B_C_X_Y_Z);
+		addPadCamera();
 		#end
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
