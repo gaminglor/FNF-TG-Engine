@@ -489,7 +489,7 @@ class FreeplayState extends MusicBeatState
 				textColorTween = null;
 			}
 		});
-		changeDiff(0)
+		changeDiff(0);
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
