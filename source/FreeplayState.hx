@@ -49,6 +49,7 @@ class FreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+	var textColorTween:FlxTween;
 
 	override function create()
 	{
@@ -353,6 +354,10 @@ class FreeplayState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
+			
+			if (textColorTween != null)
+				textColorTween.cancel();
+			
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
@@ -415,6 +420,9 @@ class FreeplayState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
+			
+			if (textColorTween != null)
+				textColorTween.cancel();
 			
 			if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
@@ -481,6 +489,7 @@ class FreeplayState extends MusicBeatState
 				textColorTween = null;
 			}
 		});
+		changeDiff(0)
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
