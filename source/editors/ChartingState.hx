@@ -2095,9 +2095,16 @@ class ChartingState extends MusicBeatState
 
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
+		
+		var showTime:String = FlxStringUtil.formatTime(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2), false) + ' / ' + FlxStringUtil.formatTime(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2), false);
+		var currentDifficulty:String = CoolUtil.difficulties[PlayState.storyDifficulty];
+		var daSongPosition = FlxMath.roundDecimal(Conductor.songPosition / 1000, 2);
 
 		bpmTxt.text =
-		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
+		currentSongName + ' [' + currentDifficulty + ']' +
+		"\n"+ showTime +
+		"\n"+
+		"\n"+Std.string(daSongPosition) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2))+
 		"\nSection: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
 		"\n\nStep: " + curStep +
