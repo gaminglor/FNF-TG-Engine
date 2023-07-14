@@ -470,21 +470,21 @@ class FreeplayState extends MusicBeatState
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 		
-		var difficult = CoolUtil.difficultyString();
-		var intendedColor = 0xFFFFFF;
+		var difficultyN = CoolUtil.difficultyString();
+		var textColor = 0xFFFFFF;
 		
-		if (difficult.toLowerCase() == 'hard') intendedColor = 0xFF0000;
-		if (difficult.toLowerCase() == 'normal') intendedColor = 0xFFFF00;
-		if (difficult.toLowerCase() == 'easy') intendedColor = 0x00FF00;
+		if (difficultyN.toLowerCase() == 'hard') textColor = 0xFF0000;
+		if (difficultyN.toLowerCase() == 'normal') textColor = 0xFFFF00;
+		if (difficultyN.toLowerCase() == 'easy') textColor = 0x00FF00;
 		
 		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + difficult + ' >';
+		diffText.text = '< ' + difficultyN + ' >';
 		positionHighscore();
 		
 		if (textColorTween != null)
 			textColorTween.cancel();
 			
-		textColorTween = FlxTween.color(diffText, 0.5, diffText.color, intendedColor, {
+		textColorTween = FlxTween.color(diffText, 0.5, diffText.color, textColor, {
 			onComplete: function(twn:FlxTween) {
 				textColorTween = null;
 			}
@@ -513,7 +513,6 @@ class FreeplayState extends MusicBeatState
 					colorTween = null;
 				}
 			});
-			changeDiff();
 		}
 
 		// selector.y = (70 * curSelected) + 30;
@@ -589,6 +588,8 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = newPos;
 		}
+		
+		changeDiff();
 	}
 
 	private function positionHighscore() {
