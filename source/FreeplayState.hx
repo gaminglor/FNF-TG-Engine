@@ -137,6 +137,7 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 			
 			songText.screenCenter(X);
+			songText.x -= 40;
 			songText.changeX = false;
 		}
 		WeekData.setDirectoryFromWeek();
@@ -460,10 +461,26 @@ class FreeplayState extends MusicBeatState
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
-
+		
+		var difficult = CoolUtil.difficultyString();
+		var intendedColor = 0xFFFFFF;
+		
+		if (difficult.toLowerCase() == 'hard') intendedColor = 0xFF0000;
+		if (difficult.toLowerCase() == 'normal') intendedColor = 0xFFFF00;
+		if (difficult.toLowerCase() == 'easy') intendedColor = 0x00FF00;
+		
 		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		diffText.text = '< ' + difficult + ' >';
 		positionHighscore();
+		
+		if (textColorTween != null)
+			textColorTween.cancel();
+			
+		textColorTween = FlxTween.color(diffText, 0.5, diffText.color, intendedColor, {
+			onComplete: function(twn:FlxTween) {
+				textColorTween = null;
+			}
+		});
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
