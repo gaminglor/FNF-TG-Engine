@@ -40,6 +40,8 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		add(loadRight);
 
 		if(!isTransIn) {
+			FlxG.sound.play(Paths.sound('shutter_close'));
+			
 			loadLeftTween = FlxTween.tween(loadLeft, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
@@ -51,9 +53,8 @@ class CustomFadeTransition extends MusicBeatSubstate {
 					close();
 				},
 			ease: FlxEase.smootherStepInOut});
-			
-			FlxG.sound.play(Paths.sound('shutter_close'));
 		} else {
+			FlxG.sound.play(Paths.sound('shutter_open'));
 			loadLeftTween = FlxTween.tween(loadLeft, {x: -1280}, duration, {
 				onComplete: function(twn:FlxTween) {
 					if(finishCallback != null) {
@@ -69,8 +70,6 @@ class CustomFadeTransition extends MusicBeatSubstate {
 					}
 				},
 			ease: FlxEase.smootherStepInOut});
-			
-			FlxG.sound.play(Paths.sound('shutter_open'));
 		}
 
 		if(nextCamera != null) {
