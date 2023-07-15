@@ -471,7 +471,7 @@ class FreeplayState extends MusicBeatState
 		#end
 		
 		var difficultyN = CoolUtil.difficultyString();
-		var textColor = 0xFFFFFF;
+		var textColor = FlxColor.fromRGB(255, 255, 255);
 		
 		if (difficultyN.toLowerCase() == 'hard') textColor = FlxColor.fromRGB(255, 0, 0);
 		if (difficultyN.toLowerCase() == 'normal') textColor = FlxColor.fromRGB(255, 255, 0);

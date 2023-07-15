@@ -31,26 +31,23 @@ class CustomFadeTransition extends MusicBeatSubstate {
 
 		this.isTransIn = isTransIn;
 		
-		loadLeft = new FlxSprite(-1280, 0).loadGraphic(Paths.image('loadingL'));
+		loadLeft = new FlxSprite(isTransIn ? 0 : -1280, 0).loadGraphic(Paths.image('loadingL'));
 		loadLeft.scrollFactor.set();
 		add(loadLeft);
 		
-		loadRight = new FlxSprite(1280, 0).loadGraphic(Paths.image('loadingR'));
+		loadRight = new FlxSprite(isTransIn ? 0 : 1280, 0).loadGraphic(Paths.image('loadingR'));
 		loadRight.scrollFactor.set();
 		add(loadRight);
 
 		if(!isTransIn) {
 			FlxG.sound.play(Paths.sound('shutter_close'));
-			loadRight.x = 1280;
-			loadLeft.x = -1280;
-			
 			loadLeftTween = FlxTween.tween(loadLeft, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
 					if(finishCallback != null) {
 						finishCallback();
 					}
 				},
-			ease: FlxEase.smootherStepInOut});
+			ease: FlxEase.smoothStepInOut});
 			
 			loadRightTween = FlxTween.tween(loadRight, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
@@ -58,11 +55,9 @@ class CustomFadeTransition extends MusicBeatSubstate {
 						finishCallback();
 					}
 				},
-			ease: FlxEase.smootherStepInOut});
+			ease: FlxEase.smoothStepInOut});
 		} else {
 			FlxG.sound.play(Paths.sound('shutter_open'));
-			loadRight.x = 0;
-			loadLeft.x = 0;
 			loadLeftTween = FlxTween.tween(loadLeft, {x: -1280}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
