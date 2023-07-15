@@ -7,6 +7,7 @@ import flixel.math.FlxRect;
 import flixel.util.FlxTimer;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxEase;
+import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
@@ -25,11 +26,15 @@ class CustomFadeTransition extends MusicBeatSubstate {
 	
 	var loadLeftTween:FlxTween;
 	var loadRightTween:FlxTween;
+	var loadTextTween:FlxTween;
+	
+	var tipsShit:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('loadingTipsList'));
 
 	public function new(duration:Float, isTransIn:Bool) {
 		super();
 
 		this.isTransIn = isTransIn;
+		tipsShit.push('Engine made by TieGuo');
 		
 		loadLeft = new FlxSprite(isTransIn ? 0 : -1280, 0).loadGraphic(Paths.image('loadingL'));
 		loadLeft.scrollFactor.set();
@@ -38,6 +43,11 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		loadRight = new FlxSprite(isTransIn ? 0 : 1280, 0).loadGraphic(Paths.image('loadingR'));
 		loadRight.scrollFactor.set();
 		add(loadRight);
+		
+		var tipShit:FlxText = new FlxText(isTransIn ? 50 : -1280, FlxG.height - 264, 0, tipsShit[FlxG.random.int(0, tipsShit.length-1)], 30);
+		tipShit.scrollFactor.set();
+		tipShit.setFormat(Paths.font('syht.ttf'), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(tipShit);
 
 		if(!isTransIn) {
 			FlxG.sound.play(Paths.sound('shutter_close'));
@@ -47,7 +57,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 						finishCallback();
 					}
 				},
-			ease: FlxEase.smoothStepInOut});
+			ease: FlxEase.quartInOut});
 			
 			loadRightTween = FlxTween.tween(loadRight, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
@@ -55,20 +65,34 @@ class CustomFadeTransition extends MusicBeatSubstate {
 						finishCallback();
 					}
 				},
-			ease: FlxEase.smoothStepInOut});
+			ease: FlxEase.quartInOut});
+			
+			loadTextTween = FlxTween.tween(tipShit, {x: 50}, duration, {
+				onComplete: function(twn:FlxTween) {
+					if(finishCallback != null) {
+						finishCallback();
+					}
+				},
+			ease: FlxEase.quartInOut});
 		} else {
 			FlxG.sound.play(Paths.sound('shutter_open'));
 			loadLeftTween = FlxTween.tween(loadLeft, {x: -1280}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
 				},
-			ease: FlxEase.smootherStepInOut});
+			ease: FlxEase.smootherStepIn});
 			
 			loadRightTween = FlxTween.tween(loadRight, {x: 1280}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
 				},
-			ease: FlxEase.smootherStepInOut});
+			ease: FlxEase.smootherStepIn});
+			
+			loadTextTween = FlxTween.tween(tipShit, {x: -1280}, duration, {
+				onComplete: function(twn:FlxTween) {
+					close();
+				},
+			ease: FlxEase.smootherStepIn});
 		}
 
 		if(nextCamera != null) {
