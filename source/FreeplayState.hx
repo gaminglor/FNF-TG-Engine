@@ -473,9 +473,9 @@ class FreeplayState extends MusicBeatState
 		var difficultyN = CoolUtil.difficultyString();
 		var textColor = 0xFFFFFF;
 		
-		if (difficultyN.toLowerCase() == 'hard') textColor = 0xFF0000;
-		if (difficultyN.toLowerCase() == 'normal') textColor = 0xFFFF00;
-		if (difficultyN.toLowerCase() == 'easy') textColor = 0x00FF00;
+		if (difficultyN.toLowerCase() == 'hard') textColor = FlxColor.fromRGB(255, 0, 0);
+		if (difficultyN.toLowerCase() == 'normal') textColor = FlxColor.fromRGB(255, 255, 0);
+		if (difficultyN.toLowerCase() == 'easy') textColor = FlxColor.fromRGB(0, 255, 0);
 		
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + difficultyN + ' >';
