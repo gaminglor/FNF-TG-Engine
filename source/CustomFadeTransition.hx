@@ -39,7 +39,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		loadRight.scrollFactor.set();
 		add(loadRight);
 
-		if(isTransIn) {
+		if(!isTransIn) {
 			loadLeftTween = FlxTween.tween(loadLeft, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
