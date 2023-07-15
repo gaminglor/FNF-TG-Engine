@@ -43,14 +43,15 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		loadRight = new FlxSprite(isTransIn ? 0 : 1280, 0).loadGraphic(Paths.image('loadingR'));
 		loadRight.scrollFactor.set();
 		add(loadRight);
-		
-		var tipShit:FlxText = new FlxText(isTransIn ? 50 : -1280, FlxG.height - 264, 0, tipsShit[FlxG.random.int(0, tipsShit.length-1)], 30);
-		tipShit.scrollFactor.set();
-		tipShit.setFormat(Paths.font('syht.ttf'), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(tipShit);
 
 		if(!isTransIn) {
 			FlxG.sound.play(Paths.sound('shutter_close'));
+			
+			var tipShit:FlxText = new FlxText(isTransIn ? 50 : -1230, FlxG.height - 200, 0, tipsShit[FlxG.random.int(0, tipsShit.length-1)], 30);
+			tipShit.scrollFactor.set();
+			tipShit.setFormat(Paths.font('syht.ttf'), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			add(tipShit);
+		
 			loadLeftTween = FlxTween.tween(loadLeft, {x: 0}, duration, {
 				onComplete: function(twn:FlxTween) {
 					if(finishCallback != null) {
@@ -88,7 +89,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 				},
 			ease: FlxEase.smootherStepIn});
 			
-			loadTextTween = FlxTween.tween(tipShit, {x: -1280}, duration, {
+			loadTextTween = FlxTween.tween(tipShit, {x: -1230}, duration, {
 				onComplete: function(twn:FlxTween) {
 					close();
 				},
