@@ -19,65 +19,53 @@ class CustomFadeTransition extends MusicBeatSubstate {
 	private var leTween:FlxTween = null;
 	public static var nextCamera:FlxCamera;
 	var isTransIn:Bool = false;
-	var transBlack:FlxSprite;
-	var transGradient:FlxSprite;
+	
+	var loadLeft:FlxSprite;
+	var loadRight:FlxSprite;
+	
+	var loadLeftTween:FlxTween;
+	var loadRightTween:FlxTween;
 
 	public function new(duration:Float, isTransIn:Bool) {
 		super();
 
 		this.isTransIn = isTransIn;
-		var zoom:Float = CoolUtil.boundTo(FlxG.camera.zoom, 0.05, 1);
-		var width:Int = Std.int(FlxG.width / zoom);
-		var height:Int = Std.int(FlxG.height / zoom);
-		transGradient = FlxGradient.createGradientFlxSprite(width, height, (isTransIn ? [0x0, FlxColor.BLACK] : [FlxColor.BLACK, 0x0]));
-		transGradient.scrollFactor.set();
-		add(transGradient);
-
-		transBlack = new FlxSprite().makeGraphic(width, height + 400, FlxColor.BLACK);
-		transBlack.scrollFactor.set();
-		add(transBlack);
-
-		transGradient.x -= (width - FlxG.width) / 2;
-		transBlack.x = transGradient.x;
+		
+		loadLeft = new FlxSprite(-1280, 0).loadGraphic(Paths.image('loadingL');
+		loadLeft.scrollFactor.set();
+		add(loadLeft);
+		
+		loadRight = new FlxSprite(1280, 0).loadGraphic(Paths.image('loadingR');
+		loadRight.scrollFactor.set();
+		add(loadRight);
 
 		if(isTransIn) {
-			transGradient.y = transBlack.y - transBlack.height;
-			FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {
-				onComplete: function(twn:FlxTween) {
-					close();
-				},
-			ease: FlxEase.linear});
+			loadLeftTween = FlxTween.tween(loadLeft, {x: 0}, 0.75, {ease: FlxEase.smootherStepInOut});
+			
+			loadRightTween = FlxTween.tween(loadRight, {x: 0}, 0.75, {ease: FlxEase.smootherStepInOut});
+			
+			FlxG.sound.play(Paths.sound('shutter_close'));
 		} else {
-			transGradient.y = -transGradient.height;
-			transBlack.y = transGradient.y - transBlack.height + 50;
-			leTween = FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {
+			loadLeftTween = FlxTween.tween(loadLeft, {x: -1280}, 0.75, {
 				onComplete: function(twn:FlxTween) {
-					if(finishCallback != null) {
-						finishCallback();
-					}
+					// loadLeft.kill();
 				},
-			ease: FlxEase.linear});
+			ease: FlxEase.smootherStepInOut});
+			
+			loadRightTween = FlxTween.tween(loadRight, {x: 1280}, 0.75, {
+				onComplete: function(twn:FlxTween) {
+					// loadRight.kill();
+				},
+			ease: FlxEase.smootherStepInOut});
+			
+			FlxG.sound.play(Paths.sound('shutter_open'));
 		}
 
 		if(nextCamera != null) {
-			transBlack.cameras = [nextCamera];
-			transGradient.cameras = [nextCamera];
+			loadRight.cameras = [nextCamera];
+			loadLeft.cameras = [nextCamera];
 		}
 		nextCamera = null;
-	}
-
-	override function update(elapsed:Float) {
-		if(isTransIn) {
-			transBlack.y = transGradient.y + transGradient.height;
-		} else {
-			transBlack.y = transGradient.y - transBlack.height;
-		}
-		super.update(elapsed);
-		if(isTransIn) {
-			transBlack.y = transGradient.y + transGradient.height;
-		} else {
-			transBlack.y = transGradient.y - transBlack.height;
-		}
 	}
 
 	override function destroy() {

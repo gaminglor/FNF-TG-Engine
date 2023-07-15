@@ -2331,14 +2331,10 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		if (!cpuControlled) {
-			scoreTxt.text = 'Score: ' + songScore
-			+ ' | Misses: ' + songMisses
-			+ ' | Rating: ' + ratingName + '\n'
-			+ (ratingName != '?' ? 'Accuracy: ${Highscore.floorDecimal(ratingPercent * 100, 2)}% - $ratingFC' : '');
-		} else {
-			scoreTxt.text = 'Score: ? | Botplay';
-		}
+		scoreTxt.text = 'Score: ' + songScore
+		+ ' | Misses: ' + songMisses
+		+ ' | Rating: ' + ratingName
+		+ (ratingName != '?' ? 'Accuracy: ${Highscore.floorDecimal(ratingPercent * 100, 2)}% - $ratingFC' : '');
 		
 		if(ClientPrefs.scoreZoom && !miss)
 		{
