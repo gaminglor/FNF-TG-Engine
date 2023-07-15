@@ -31,11 +31,11 @@ class CustomFadeTransition extends MusicBeatSubstate {
 
 		this.isTransIn = isTransIn;
 		
-		loadLeft = new FlxSprite(-1280, 0).loadGraphic(Paths.image('loadingL');
+		loadLeft = new FlxSprite(-1280, 0).loadGraphic(Paths.image('loadingL'));
 		loadLeft.scrollFactor.set();
 		add(loadLeft);
 		
-		loadRight = new FlxSprite(1280, 0).loadGraphic(Paths.image('loadingR');
+		loadRight = new FlxSprite(1280, 0).loadGraphic(Paths.image('loadingR'));
 		loadRight.scrollFactor.set();
 		add(loadRight);
 
