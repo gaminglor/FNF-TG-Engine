@@ -46,13 +46,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		
 		var randomSeed = FlxG.random.int(0, tipsShit.length-1);
 		var textString = 'idk';
-		
-		if (!isTransIn) {
-			tipsShit[randomSeed];
-		} else {
-			textString = tipShit.text;
-		}
-		
+	
 		var tipShit:FlxText = new FlxText(isTransIn ? 50 : -1230, FlxG.height - 200, 0, textString, 30);
 		tipShit.scrollFactor.set();
 		tipShit.setFormat(Paths.font('syht.ttf'), 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -103,6 +97,8 @@ class CustomFadeTransition extends MusicBeatSubstate {
 					close();
 				},
 			ease: FlxEase.smootherStepIn});
+			
+			tipShit.text = 'Completed !';
 		}
 
 		if(nextCamera != null) {
