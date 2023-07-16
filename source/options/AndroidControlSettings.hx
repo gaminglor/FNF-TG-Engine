@@ -40,15 +40,15 @@ class AndroidControlSettings extends BaseOptionsMenu
 		rpcTitle = 'Hitbox Settings Menu'; //hi, you can ask what is that, i will answer it's all what you needed lol.
 
 		var option:Option = new Option('Hitbox Mode:',
-			"Choose your Hitbox Style!  -mariomaster",
+			"Choose your Hitbox Style!",
 			'hitboxmode',
 			'string',
 			'Classic',
 			['Classic', 'New']);
 		  addOption(option);
 		  
-		var option:Option = new Option('Hitbox Opacity', //mariomaster was here again
-			'Changes opacity -omg',
+		var option:Option = new Option('Hitbox Opacity',
+			'Changes opacity',
 			'hitboxalpha',
 			'float',
 			0.2);
@@ -59,14 +59,19 @@ class AndroidControlSettings extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
-		var option:Option = new Option('Virtual pad Opacity:',
-			'Changes virtual pad opacity.\nMaximum value for opacity its: 1.\nset 0 if you don\'t like it LOL', 'virtualPadAlpha', 'float',
-			0.5); // Credits: MarioMaster (Created hitbox opacity)
+		var option:Option = new Option('Virtual pad Opacity',
+			'Changes virtual pad opacity.', 'virtualPadAlpha', 'float',
+			0.5);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0;
 		option.maxValue = 1;
 		option.changeValue = 0.01;
 		option.decimals = 2;
+		addOption(option);
+		
+		var option:Option = new Option('Perpheral Mouse Allowed',
+			'Use mouse replace touch when need', 'perpheralMouseAllowed', 'bool',
+			false);
 		addOption(option);
 
 		super();
