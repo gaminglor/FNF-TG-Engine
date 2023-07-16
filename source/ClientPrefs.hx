@@ -38,7 +38,9 @@ class ClientPrefs {
 	public static var hitboxmode:String = 'Classic';  //starting new way to change between hitboxes yay
 	public static var hitboxalpha:Float = 0.2; //someone request this lol
 	public static var virtualPadAlpha:Float = 0.5;
+	public static var perpheralMouseAllowed:Bool = false;
 	public static var language:String = 'English'; //fan?
+	public static var funloading:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -140,10 +142,11 @@ class ClientPrefs {
 		FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
 		
-		
+		FlxG.save.data.funloading = funloading;
 		FlxG.save.data.hitboxmode = hitboxmode;
 		FlxG.save.data.hitboxalpha = hitboxalpha;
 		FlxG.save.data.virtualPadAlpha = virtualPadAlpha;
+		FlxG.save.data.perpheralMouseAllowed = perpheralMouseAllowed;
 		
 		FlxG.save.data.language = language;
 	
@@ -271,8 +274,14 @@ class ClientPrefs {
 		if(FlxG.save.data.virtualPadAlpha != null) {
 			virtualPadAlpha = FlxG.save.data.virtualPadAlpha;
 		}
+		if(FlxG.save.data.perpheralMouseAllowed != null) {
+			perpheralMouseAllowed = FlxG.save.data.perpheralMouseAllowed;
+		}
 		if(FlxG.save.data.language != null) {
 			language = FlxG.save.data.language;
+		}
+		if(FlxG.save.data.funloading != null) {
+			funloading = FlxG.save.data.funloading;
 		}
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
