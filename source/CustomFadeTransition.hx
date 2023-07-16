@@ -45,7 +45,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		add(loadRight);
 		
 		var randomSeed = FlxG.random.int(0, tipsShit.length-1);
-		var textString = 'idk';
+		var textString = tipsShit[randomSeed];
 	
 		var tipShit:FlxText = new FlxText(isTransIn ? 50 : -1230, FlxG.height - 200, 0, textString, 30);
 		tipShit.scrollFactor.set();
