@@ -464,22 +464,22 @@ class FreeplayState extends MusicBeatState
 			curDifficulty = 0;
 
 		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
+		
+		var difficultyN = CoolUtil.difficultyString();
+		var textColor = FlxColor.fromRGB(255, 255, 255);
+		
+		PlayState.storyDifficulty = curDifficulty;
+		diffText.text = '< ' + difficultyN + ' >';
+		positionHighscore();
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 		
-		var difficultyN = CoolUtil.difficultyString();
-		var textColor = FlxColor.fromRGB(255, 255, 255);
-		
 		if (difficultyN.toLowerCase() == 'hard') textColor = FlxColor.fromRGB(255, 0, 0);
 		if (difficultyN.toLowerCase() == 'normal') textColor = FlxColor.fromRGB(255, 255, 0);
 		if (difficultyN.toLowerCase() == 'easy') textColor = FlxColor.fromRGB(0, 255, 0);
-		
-		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + difficultyN + ' >';
-		positionHighscore();
 		
 		if (textColorTween != null)
 			textColorTween.cancel();
@@ -490,6 +490,7 @@ class FreeplayState extends MusicBeatState
 			}
 		});
 	}
+
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
@@ -588,8 +589,6 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = newPos;
 		}
-		
-		changeDiff();
 	}
 
 	private function positionHighscore() {
