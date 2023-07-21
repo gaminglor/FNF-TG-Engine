@@ -299,7 +299,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		remove(noteExample);
 		
 		var noteSkin = 'NOTE_assets';
-		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
+		var noteAnimArray = ['arrowLEFT0', 'purple0', 'arrowDOWN0', 'blue0', 'arrowUP0', 'green0', 'arrowRIGHT0', 'red0'];
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
@@ -317,7 +317,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		noteExample.updateHitbox();
 		add(noteExample);
 		
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			curAnim++;
 			if (curAnim > noteAnimArray.length-1) curAnim = 0;
