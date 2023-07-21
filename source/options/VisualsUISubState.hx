@@ -32,7 +32,7 @@ using StringTools;
 class VisualsUISubState extends BaseOptionsMenu
 {
 	var language:String = ClientPrefs.language;
-	var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('noteSkinList.txt'));
+	var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('noteSkinList'));
 	
 	public function new()
 	{
