@@ -50,6 +50,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	
 	var velocityBG:FlxBackdrop;
 	var noteExample:FlxSprite;
+	var noteSkinChange:FlxTimer;
 
 	public function new()
 	{
@@ -359,7 +360,11 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	
 	function addNoteSkin()
 	{
-		remove(noteExample);
+		if (noteExample != null)
+			remove(noteExample);
+			
+		if (noteSkinChange != null)
+			noteSkinChange.cancel();
 
 		var noteSkin = 'NOTE_assets';
 		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
@@ -380,7 +385,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		noteExample.updateHitbox();
 		add(noteExample);
 		
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		noteSkinChange = new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			curAnim++;
 			if (curAnim > noteAnimArray.length-1) curAnim = 0;

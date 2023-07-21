@@ -296,7 +296,11 @@ class VisualsUISubState extends BaseOptionsMenu
 	
 	function onChangeNoteSkin()
 	{
-		remove(noteExample);
+		if (noteExample != null)
+			remove(noteExample);
+			
+		if (noteSkinChange != null)
+			noteSkinChange.cancel();
 		
 		var noteSkin = 'NOTE_assets';
 		var noteAnimArray = ['arrowLEFT0', 'purple0', 'arrowDOWN0', 'blue0', 'arrowUP0', 'green0', 'arrowRIGHT0', 'red0'];
@@ -317,7 +321,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		noteExample.updateHitbox();
 		add(noteExample);
 		
-		new FlxTimer().start(1, function(tmr:FlxTimer)
+		noteSkinChange = new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			curAnim++;
 			if (curAnim > noteAnimArray.length-1) curAnim = 0;
