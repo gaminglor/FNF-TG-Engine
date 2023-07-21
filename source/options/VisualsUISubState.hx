@@ -23,6 +23,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.frames.FlxFrame;
 import Controls;
 
 using StringTools;
@@ -31,6 +33,7 @@ class VisualsUISubState extends BaseOptionsMenu
 {
 	var language:String = ClientPrefs.language;
 	var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('noteSkinList.txt'));
+	var noteExample:FlxSprite;
 	
 	public function new()
 	{
@@ -296,19 +299,18 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		remove(noteExample);
 		
-		var noteExample:FlxSprite;
 		var noteSkin = 'NOTE_assets';
 		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
 		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
-		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + noteSkin);
+		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + noteSkin.toLowerCase());
 		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		for (i in 0...noteAnimArray.length)
 		{
-			noteExample.animation.addByPrefix(noteAnimArray[i], [i], 24);
+			noteExample.animation.addByPrefix(noteAnimArray[i], noteAnimArray[i], 24);
 		}
 		
 		noteExample.animation.play('arrowLEFT');

@@ -25,6 +25,8 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.frames.FlxFrame;
 import Controls;
 
 using StringTools;
@@ -47,6 +49,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	public var rpcTitle:String;
 	
 	var velocityBG:FlxBackdrop;
+	var noteExample:FlxSprite;
 
 	public function new()
 	{
@@ -318,7 +321,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.y += 270;
 		
 		if (optionsArray[curSelected].name == 'Note Skin') {
-			onChangeNoteSkin();
+			addNoteSkin();
 		} else {
 			if (noteExample != null)
 				remove(noteExample);
@@ -354,23 +357,22 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 	
-	function onChangeNoteSkin()
+	function addNoteSkin()
 	{
 		remove(noteExample);
-		
-		var noteExample:FlxSprite;
+
 		var noteSkin = 'NOTE_assets';
 		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
 		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
-		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + ClientPrefs.noteSkin);
+		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + ClientPrefs.noteSkin.toLowerCase());
 		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		for (i in 0...noteAnimArray.length)
 		{
-			noteExample.animation.addByPrefix(noteAnimArray[i], [i], 24);
+			noteExample.animation.addByPrefix(noteAnimArray[i], noteAnimArray[i], 24);
 		}
 		
 		noteExample.animation.play('arrowLEFT');
