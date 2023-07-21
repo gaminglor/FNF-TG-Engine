@@ -316,6 +316,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.text = optionsArray[curSelected].description;
 		descText.screenCenter(Y);
 		descText.y += 270;
+		
+		if (optionsArray[curSelected].name == 'Note Skin') {
+			onChangeNoteSkin();
+		} else {
+			if (noteExample != null)
+				remove(noteExample);
+		}
 
 		var bullShit:Int = 0;
 
@@ -345,6 +352,38 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 		curOption = optionsArray[curSelected]; //shorter lol
 		FlxG.sound.play(Paths.sound('scrollMenu'));
+	}
+	
+	function onChangeNoteSkin()
+	{
+		remove(noteExample);
+		
+		var noteExample:FlxSprite;
+		var noteSkin = 'NOTE_assets';
+		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
+		var curAnim = 0;
+		
+		noteExample = new FlxSprite(1000, 0);
+		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
+		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + ClientPrefs.noteSkin);
+		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
+		
+		for (i in 0...noteAnimArray.length)
+		{
+			noteExample.animation.addByPrefix(noteAnimArray[i], [i], 24);
+		}
+		
+		noteExample.animation.play('arrowLEFT');
+		noteExample.screenCenter(Y);
+		noteExample.updateHitbox();
+		add(noteExample);
+		
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			curAnim++;
+			if (curAnim > noteAnimArray.length-1) curAnim = 0;
+			noteExample.animation.play(noteAnimArray[curAnim]);
+		}, 0);
 	}
 
 	public function reloadBoyfriend()

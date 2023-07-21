@@ -30,11 +30,13 @@ using StringTools;
 class VisualsUISubState extends BaseOptionsMenu
 {
 	var language:String = ClientPrefs.language;
+	var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('noteSkinList.txt'));
 	
 	public function new()
 	{
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
+		noteSkinList.unshift('Default');
 		
 		if (ClientPrefs.language == 'Chinese') {
 		var option:Option = new Option('Note Splashes',
@@ -43,6 +45,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+		var option:Option = new Option('Note Skin',
+			"选择按键皮肤",
+			'noteSkin',
+			'string',
+			'Default',
+			noteSkinList);
+		addOption(option);
+		option.onChange = onChangeNoteSkin;
 
 		var option:Option = new Option('Hide HUD',
 			'隐藏HUD',
@@ -100,6 +111,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
+		var option:Option = new Option('Fun Loading',
+			'一个很cool的加载界面',
+			'funloading',
+			'bool',
+			false);
+		addOption(option);
+		
 		var option:Option = new Option('FPS Counter',
 			'FPS 计数器',
 			'showFPS',
@@ -127,7 +145,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		#end
 
 		var option:Option = new Option('Combo Stacking',
-			'如果关闭, 连击/数贴图将不会重置 并会保存到系统缓存中',
+			'嗯，如果他关闭了的话。玩的时候最多就只会出现一个这样的贴图\n    -----油盐不贵',
 			'comboStacking',
 			'bool',
 			true);
@@ -140,6 +158,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+		var option:Option = new Option('Note Skin',
+			"Choose your note skin",
+			'noteSkin',
+			'string',
+			'Default',
+			noteSkinList);
+		addOption(option);
+		option.onChange = onChangeNoteSkin;
 
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
@@ -197,6 +224,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
+		var option:Option = new Option('Fun Loading',
+			'A cool loading state',
+			'funloading',
+			'bool',
+			false);
+		addOption(option);
+		
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
 			'showFPS',
@@ -248,6 +282,7 @@ class VisualsUISubState extends BaseOptionsMenu
 	override function destroy()
 	{
 		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		if (noteExample != null) remove(noteExample);
 		super.destroy();
 	}
 
@@ -255,5 +290,37 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.showFPS;
+	}
+	
+	function onChangeNoteSkin()
+	{
+		remove(noteExample);
+		
+		var noteExample:FlxSprite;
+		var noteSkin = 'NOTE_assets';
+		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
+		var curAnim = 0;
+		
+		noteExample = new FlxSprite(1000, 0);
+		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
+		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + noteSkin);
+		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
+		
+		for (i in 0...noteAnimArray.length)
+		{
+			noteExample.animation.addByPrefix(noteAnimArray[i], [i], 24);
+		}
+		
+		noteExample.animation.play('arrowLEFT');
+		noteExample.screenCenter(Y);
+		noteExample.updateHitbox();
+		add(noteExample);
+		
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			curAnim++;
+			if (curAnim > noteAnimArray.length-1) curAnim = 0;
+			noteExample.animation.play(noteAnimArray[curAnim]);
+		}, 0);
 	}
 }
