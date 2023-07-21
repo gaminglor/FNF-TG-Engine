@@ -41,6 +41,7 @@ class ClientPrefs {
 	public static var perpheralMouseAllowed:Bool = false;
 	public static var language:String = 'English'; //fan?
 	public static var funloading:Bool = false;
+	public static var noteSkin:String = 'Default';
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -149,7 +150,7 @@ class ClientPrefs {
 		FlxG.save.data.perpheralMouseAllowed = perpheralMouseAllowed;
 		
 		FlxG.save.data.language = language;
-	
+		FlxG.save.data.noteSkin = noteSkin;
 	
 		FlxG.save.flush();
 
@@ -282,6 +283,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.funloading != null) {
 			funloading = FlxG.save.data.funloading;
+		}
+		if(FlxG.save.data.noteSkin != null) {
+			noteSkin = FlxG.save.data.noteSkin;
 		}
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
