@@ -307,8 +307,8 @@ class VisualsUISubState extends BaseOptionsMenu
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
-		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
-		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + noteSkin.toLowerCase());
+		if (ClientPrefs.noteSkin != 'Default') noteSkin = 'noteSkin/' + ClientPrefs.noteSkin.toLowerCase();
+		noteExample.frames = Paths.getSparrowAtlas(noteSkin);
 		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		for (i in 0...noteAnimArray.length)

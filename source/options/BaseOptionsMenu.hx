@@ -365,14 +365,14 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			
 		if (noteSkinChange != null)
 			noteSkinChange.cancel();
-
+		
 		var noteSkin = 'NOTE_assets';
-		var noteAnimArray = ['arrowLEFT', 'purple', 'arrowDOWN', 'blue', 'arrowUP', 'green', 'arrowRIGHT', 'red'];
+		var noteAnimArray = ['arrowLEFT0', 'purple0', 'arrowDOWN0', 'blue0', 'arrowUP0', 'green0', 'arrowRIGHT0', 'red0'];
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
-		if (ClientPrefs.noteSkin != 'Default') noteSkin = ClientPrefs.noteSkin;
-		noteExample.frames = Paths.getSparrowAtlas('noteSkin/' + ClientPrefs.noteSkin.toLowerCase());
+		if (ClientPrefs.noteSkin != 'Default') noteSkin = 'noteSkin/' + ClientPrefs.noteSkin.toLowerCase();
+		noteExample.frames = Paths.getSparrowAtlas(noteSkin);
 		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		for (i in 0...noteAnimArray.length)
