@@ -371,7 +371,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		var curAnim = 0;
 		
 		noteExample = new FlxSprite(1000, 0);
-		if (ClientPrefs.noteSkin != 'Default') noteSkin = 'noteSkin/' + ClientPrefs.noteSkin.toLowerCase();
+		if (ClientPrefs.noteSkin != 'Default') noteSkin = 'noteSkin/' + ClientPrefs.noteSkin;
 		noteExample.frames = Paths.getSparrowAtlas(noteSkin);
 		noteExample.antialiasing = ClientPrefs.globalAntialiasing;
 		
@@ -385,7 +385,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		noteExample.updateHitbox();
 		add(noteExample);
 		
-		noteSkinChange = new FlxTimer().start(1, function(tmr:FlxTimer)
+		noteSkinChange = new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
 			curAnim++;
 			if (curAnim > noteAnimArray.length-1) curAnim = 0;
