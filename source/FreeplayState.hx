@@ -398,7 +398,7 @@ class FreeplayState extends MusicBeatState
 
 		else if (accepted)
 		{
-			if (!FileSystem.exists(Paths.modJson(Paths.formatToSongPath(songs[curSelected].songName)))) {
+			if (!FileSystem.exists(Paths.modsJson(Paths.formatToSongPath(songs[curSelected].songName)))) {
 				loadFreeplaySong();
 			} else {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
