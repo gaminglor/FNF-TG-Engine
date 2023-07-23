@@ -398,41 +398,11 @@ class FreeplayState extends MusicBeatState
 
 		else if (accepted)
 		{
-			persistentUpdate = false;
-			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
-			/*#if MODS_ALLOWED
-			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
-			#else
-			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
-			#end
-				poop = songLowercase;
-				curDifficulty = 1;
-				trace('Couldnt find file');
-			}*/
-			trace(poop);
-
-			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
-
-			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
-			if(colorTween != null) {
-				colorTween.cancel();
+			if (!FileSystem.exists(Paths.modJson(Paths.formatToSongPath(songs[curSelected].songName)))) {
+				loadFreeplaySong();
+			} else {
+				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
-			
-			if (textColorTween != null)
-				textColorTween.cancel();
-			
-			if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end){
-				LoadingState.loadAndSwitchState(new ChartingState());
-			}else{
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
-
-			FlxG.sound.music.volume = 0;
-					
-			destroyFreeplayVocals();
 		}
 		else if(controls.RESET #if android || _virtualpad.buttonY.justPressed #end)
 		{
@@ -445,7 +415,35 @@ class FreeplayState extends MusicBeatState
 		}
 		super.update(elapsed);
 	}
+	
+	function loadFreeplaySong()
+	{
+		persistentUpdate = false;
+		var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+		var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+		
+		PlayState.SONG = Song.loadFromJson(poop, songLowercase);
+		PlayState.isStoryMode = false;
+		PlayState.storyDifficulty = curDifficulty;
 
+		if(colorTween != null) {
+			colorTween.cancel();
+		}
+		
+		if (textColorTween != null)
+			textColorTween.cancel();
+			
+		if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end){
+			LoadingState.loadAndSwitchState(new ChartingState());
+		}else{
+			LoadingState.loadAndSwitchState(new PlayState());
+		}
+
+		FlxG.sound.music.volume = 0;
+					
+		destroyFreeplayVocals();
+	}
+	
 	public static function destroyFreeplayVocals() {
 		if(vocals != null) {
 			vocals.stop();
