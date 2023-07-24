@@ -145,6 +145,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		#end
+		
+		var option:Option = new Option('File Check',
+			'在加载谱面时检测文件以防报错',
+			'filecheck',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Combo Stacking',
 			'嗯，如果他关闭了的话。玩的时候最多就只会出现一个这样的贴图\n    -----油盐不贵',
@@ -258,6 +265,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		#end
+		
+		var option:Option = new Option('File Check',
+			'Check chart file when load song json\nAvoid crash maybe',
+			'filecheck',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Combo Stacking',
 			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
