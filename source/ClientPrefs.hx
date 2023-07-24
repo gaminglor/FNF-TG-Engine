@@ -42,6 +42,7 @@ class ClientPrefs {
 	public static var language:String = 'English'; //fan?
 	public static var funloading:Bool = false;
 	public static var noteSkin:String = 'Default';
+	public static var filecheck:Bool = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -151,6 +152,7 @@ class ClientPrefs {
 		
 		FlxG.save.data.language = language;
 		FlxG.save.data.noteSkin = noteSkin;
+		FlxG.save.data.filecheck = filecheck;
 	
 		FlxG.save.flush();
 
@@ -311,6 +313,10 @@ class ClientPrefs {
 		if (FlxG.save.data.checkForUpdates != null)
 		{
 			checkForUpdates = FlxG.save.data.checkForUpdates;
+		}
+		if (FlxG.save.data.filecheck != null)
+		{
+			filecheck = FlxG.save.data.filecheck;
 		}
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;

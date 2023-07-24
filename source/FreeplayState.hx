@@ -398,10 +398,11 @@ class FreeplayState extends MusicBeatState
 
 		else if (accepted)
 		{
-			if (!FileSystem.exists(Paths.modsJson(Paths.formatToSongPath(songs[curSelected].songName)))) {
-				loadFreeplaySong();
-			} else {
+			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+			if (!FileSystem.exists(Paths.modsJson(songLowercase + '/' + songLowercase + '-' + CoolUtil.difficultyString().toLowerCase())) && ClientPrefs.filecheck) {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
+			} else {
+				loadFreeplaySong();
 			}
 		}
 		else if(controls.RESET #if android || _virtualpad.buttonY.justPressed #end)
