@@ -379,11 +379,16 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.music.volume = 0;
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+				var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
-					vocals = new FlxSound();
+				if (!FileSystem.exists(Paths.modsJson(songLowercase + '/' + songLowercase + (CoolUtil.difficultyString().toLowerCase() == 'normal' ? '' : '-' + CoolUtil.difficultyString().toLowerCase()))) && ClientPrefs.filecheck) {
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+				} else {
+					if (PlayState.SONG.needsVoices)
+						vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+					else
+						vocals = new FlxSound();
+				}
 
 				FlxG.sound.list.add(vocals);
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
@@ -399,7 +404,7 @@ class FreeplayState extends MusicBeatState
 		else if (accepted)
 		{
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			if (!FileSystem.exists(Paths.modsJson(songLowercase + '/' + songLowercase + '-' + CoolUtil.difficultyString().toLowerCase())) && ClientPrefs.filecheck) {
+			if (!FileSystem.exists(Paths.modsJson(songLowercase + '/' + songLowercase + (CoolUtil.difficultyString().toLowerCase() == 'normal' ? '' : '-' + CoolUtil.difficultyString().toLowerCase()))) && ClientPrefs.filecheck) {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			} else {
 				loadFreeplaySong();
