@@ -66,6 +66,15 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
+		
+		#if MODS_ALLOWED
+			if (Paths.fileExists('images/mainmenu/list.txt'))
+				optionShit = CoolUtil.coolTextFile(Paths.modFolders('images/mainmenu/list.txt'));
+			else
+				optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPath('images/mainmenu/list.txt'));
+		#else
+			optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPath('images/mainmenu/list.txt'));
+		#end
 
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
