@@ -22,6 +22,11 @@ import editors.MasterEditorMenu;
 import flixel.addons.display.FlxBackdrop;
 import flixel.input.keyboard.FlxKey;
 
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
+
 using StringTools;
 
 class MainMenuState extends MusicBeatState
