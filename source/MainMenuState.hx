@@ -76,9 +76,9 @@ class MainMenuState extends MusicBeatState
 			if(FileSystem.exists(Paths.mods(Paths.currentModDirectory + '/' + 'images/mainmenu/list.txt')) || FileSystem.exists(Paths.mods('images/mainmenu/list.txt')))
 				optionShit = CoolUtil.coolTextFile(Paths.modFolders('images/mainmenu/list.txt'));
 			else
-				optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPath('images/mainmenu/list.txt'), TEXT);
+				optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPreloadPath('images/mainmenu/list.txt'));
 		#else
-			optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPath('images/mainmenu/list.txt'), TEXT);
+			optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPreloadPath('images/mainmenu/list.txt'));
 		#end
 
 		camGame = new FlxCamera();
