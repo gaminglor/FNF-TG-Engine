@@ -68,7 +68,7 @@ class MainMenuState extends MusicBeatState
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		
 		#if MODS_ALLOWED
-			if (Paths.fileExists('images/mainmenu/list.txt'))
+			if(FileSystem.exists(Paths.mods(Paths.currentModDirectory + '/' + 'images/mainmenu/list.txt')) || FileSystem.exists(Paths.mods('images/mainmenu/list.txt')))
 				optionShit = CoolUtil.coolTextFile(Paths.modFolders('images/mainmenu/list.txt'));
 			else
 				optionShit = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPath('images/mainmenu/list.txt'));
