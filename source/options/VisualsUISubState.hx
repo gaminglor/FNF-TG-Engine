@@ -33,11 +33,18 @@ class VisualsUISubState extends BaseOptionsMenu
 {
 	var language:String = ClientPrefs.language;
 	var noteSkinList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('noteSkinList'));
+	var noteSkinListMods:Array<String> = CoolUtil.coolTextFile(Paths.modFolders('data/noteSkinList'));
 	
 	public function new()
 	{
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
+		
+		for (i in 0...noteSkinListMods.length)
+		{
+			noteSkinList.unshift(noteSkinListMods[i]);
+		}
+
 		noteSkinList.unshift('Default');
 		
 		if (ClientPrefs.language == 'Chinese') {
