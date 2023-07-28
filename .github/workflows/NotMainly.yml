@@ -30,9 +30,10 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
+          haxelib install hxcpp 4.2.1 > /dev/null
           haxelib install hmm --quiet
           haxelib run hmm install
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git
         shell: cmd
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
