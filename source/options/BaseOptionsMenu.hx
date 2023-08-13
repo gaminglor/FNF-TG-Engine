@@ -108,13 +108,16 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			optionText.yMult = 90;*/
 			optionText.targetY = i;
 			grpOptions.add(optionText);
-			
+			optionText.x += 1280;
+			FlxTween.tween(optionText, {x: optionText.x - 1280}, 0.65, {ease: FlxEase.quadOut});
 
 			if(optionsArray[i].type == 'bool') {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
+				checkbox.x += 1280;
+				FlxTween.tween(checkbox, {x: checkbox.x - 1280}, 0.65, {ease: FlxEase.quadOut});
 			} else {
 				optionText.x -= 80;
 				optionText.startPosition.x -= 80;
@@ -125,6 +128,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				valueText.ID = i;
 				grpTexts.add(valueText);
 				optionsArray[i].setChild(valueText);
+				valueText.x += 1280;
+				FlxTween.tween(valueText, {x: valueText.x - 1280}, 0.65, {ease: FlxEase.quadOut});
 			}
 			//optionText.snapToPosition(); //Don't ignore me when i ask for not making a fucking pull request to uncomment this line ok
 
@@ -136,24 +141,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 		
 		changeSelection();
-		
-		for (item in grpOptions.members)
-		{
-			item.x += 1280;
-			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
-		}
-		
-		for (item in checkboxGroup.members)
-		{
-			item.x += 1280;
-			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
-		}
-		
-		for (item in grpTexts.members)
-		{
-			item.x += 1280;
-			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
-		}
 		
 		reloadCheckboxes();
 
@@ -183,12 +170,28 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
-			#if android
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
-			close();
-			#end
+			for (item in grpOptions.members)
+			{
+				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut});
+			}
+			
+			for (item in grpTexts.members)
+			{
+				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut});
+			}
+			
+			for (item in checkboxGroup.members)
+			{
+				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut, onComplete: function(twn:FlxTween)
+				{
+					#if android
+						FlxTransitionableState.skipNextTransOut = true;
+						FlxG.resetState();
+					#else
+						close();
+					#end
+				}});
+			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 
