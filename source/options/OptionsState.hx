@@ -148,18 +148,20 @@ class OptionsState extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 	}
+	
+	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (controls.UI_UP_P) {
+		if (controls.UI_UP_P && !selectedSomethin) {
 			changeSelection(-1);
 		}
-		if (controls.UI_DOWN_P) {
+		if (controls.UI_DOWN_P && !selectedSomethin) {
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
+		if (controls.BACK && !selectedSomethin) {
 			if (PauseSubState.optionMenu) {
 				MusicBeatState.switchState(new PlayState());
 				PauseSubState.optionMenu = false;
@@ -170,21 +172,26 @@ class OptionsState extends MusicBeatState
 		}
 
 		#if android
-		if (_virtualpad.buttonE.justPressed) {
+		if (_virtualpad.buttonE.justPressed && !selectedSomethin) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new android.AndroidControlsMenu());
 		}
 		#end
 
-		if (controls.ACCEPT) {
+		if (controls.ACCEPT && !selectedSomethin) {
+			selectedSomethin = true;
 			for (item in grpOptions.members)
 			{
-				FlxTween.tween(item, {alpha: 0}, 0.9, {ease: FlxEase.quadOut});
-				FlxTween.tween(item, {x: -50}, 1, {ease: FlxEase.quadOut});
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				if (group.getIndex(item) != curSelected)
+				{
+					FlxTween.tween(item, {alpha: 0}, 0.8, {ease: FlxEase.quadOut});
+					FlxTween.tween(item, {x: item.x - 600}, 0.8, {ease: FlxEase.quadOut});
+				}
 				remove(selectorLeft);
 				remove(selectorRight);
-				FlxFlicker.flicker(item, 1, 0.06, false, false, function(flick:FlxFlicker)
+				FlxFlicker.flicker(item, 0.8, 0.06, false, false, function(flick:FlxFlicker)
 				{
 					openSelectedSubstate(options[curSelected]);
 				});
