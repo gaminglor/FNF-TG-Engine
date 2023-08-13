@@ -16,6 +16,7 @@ import lime.utils.Assets;
 import flixel.FlxSubState;
 import flash.text.TextField;
 import flixel.FlxG;
+import flixel.effects.FlxFlicker;
 import flixel.FlxSprite;
 import flixel.util.FlxSave;
 import haxe.Json;
@@ -177,7 +178,17 @@ class OptionsState extends MusicBeatState
 		#end
 
 		if (controls.ACCEPT) {
-			openSelectedSubstate(options[curSelected]);
+			for (item in grpOptions.members)
+			{
+				FlxTween.tween(item, {alpha: 0}, 0.9, {ease: FlxEase.quadOut});
+				FlxTween.tween(item, {x: -50}, 1, {ease: FlxEase.quadOut});
+				remove(selectorLeft);
+				remove(selectorRight);
+				FlxFlicker.flicker(item, 1, 0.06, false, false, function(flick:FlxFlicker)
+				{
+					openSelectedSubstate(options[curSelected]);
+				});
+			}
 		}
 	}
 	
