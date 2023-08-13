@@ -108,8 +108,6 @@ class OptionsState extends MusicBeatState
 			optionText.screenCenter();
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
 			grpOptions.add(optionText);
-			optionText.alpha = 0;
-			FlxTween.tween(optionText, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
 		}
 
 		selectorLeft = new Alphabet(0, 0, '>', true);
@@ -220,6 +218,6 @@ class OptionsState extends MusicBeatState
 				selectorRight.y = item.y;
 			}
 		}
-		FlxG.sound.play(Paths.sound('cancelMenu'));
+		FlxG.sound.play(Paths.sound('scrollMenu));
 	}
 }

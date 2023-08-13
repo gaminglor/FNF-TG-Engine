@@ -172,17 +172,17 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		if (controls.BACK) {
 			for (item in grpOptions.members)
 			{
-				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut});
+				FlxTween.tween(item, {x: item.x + 1580}, 0.55, {ease: FlxEase.quadOut});
 			}
 			
 			for (item in grpTexts.members)
 			{
-				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut});
+				FlxTween.tween(item, {x: item.x + 1580}, 0.55, {ease: FlxEase.quadOut});
 			}
 			
 			for (item in checkboxGroup.members)
 			{
-				FlxTween.tween(item, {x: item.x + 1280}, 0.55, {ease: FlxEase.quadOut, onComplete: function(twn:FlxTween)
+				FlxTween.tween(item, {x: item.x + 1580}, 0.55, {ease: FlxEase.quadOut, onComplete: function(twn:FlxTween)
 				{
 					#if android
 						FlxTransitionableState.skipNextTransOut = true;
