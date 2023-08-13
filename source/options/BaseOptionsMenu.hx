@@ -134,8 +134,27 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			}
 			updateTextFrom(optionsArray[i]);
 		}
-
+		
 		changeSelection();
+		
+		for (item in grpOptions.members)
+		{
+			item.x += 1280;
+			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
+		}
+		
+		for (item in checkboxGroup.members)
+		{
+			item.x += 1280;
+			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
+		}
+		
+		for (item in grpTexts.members)
+		{
+			item.x += 1280;
+			FlxTween.tween(item, {x: item.x - 1280}, 0.75, {ease: FlxEase.quadOut});
+		}
+		
 		reloadCheckboxes();
 
                 #if android
