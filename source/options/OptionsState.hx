@@ -184,11 +184,8 @@ class OptionsState extends MusicBeatState
 			for (item in grpOptions.members)
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				if (grpOptions.getItemIndex(item) != curSelected)
-				{
-					FlxTween.tween(item, {alpha: 0}, 0.8, {ease: FlxEase.quadOut});
-					FlxTween.tween(item, {x: item.x - 600}, 0.8, {ease: FlxEase.quadOut});
-				}
+				FlxTween.tween(item, {alpha: 0}, 0.8, {ease: FlxEase.quadOut});
+				FlxTween.tween(item, {x: item.x - 600}, 0.8, {ease: FlxEase.quadOut});
 				remove(selectorLeft);
 				remove(selectorRight);
 				FlxFlicker.flicker(item, 0.8, 0.06, false, false, function(flick:FlxFlicker)
