@@ -639,18 +639,18 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['TG Engine by'], 15);
 					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					createCoolText(['I DONT KNOW', 'beats me', 'no idea', 'i fixed the source, does that count?']);
 					#end
 				// credTextShit.visible = true;
 				case 4:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
+					addMoreText('poop', 15);
+					addMoreText('fart', 15);
+					addMoreText('vomit', 15);
 					#else
-					addMoreText('present');
+					addMoreText('bring to you');
 					#end
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
@@ -661,9 +661,9 @@ class TitleState extends MusicBeatState
 				// credTextShit.screenCenter();
 				case 6:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
+					createCoolText(['in love', 'with'], -40);
 					#else
-					createCoolText(['In association', 'with'], -40);
+					createCoolText(['a hatred', 'towards'], -40);
 					#end
 				case 8:
 					addMoreText('newgrounds', -40);
@@ -694,7 +694,7 @@ class TitleState extends MusicBeatState
 					addMoreText('Night');
 				// credTextShit.text += '\nNight';
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText(':)'); // credTextShit.text += '\nFunkin';
 
 				case 17:
 					skipIntro();
